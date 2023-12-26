@@ -5,7 +5,8 @@ module.exports = {
     sidebar: [
       '/',
       '/jsmodule',
-      '/es6/'
+      '/es6/',
+      '/es6/question.md'
     ]
   }
 }

@@ -122,21 +122,55 @@
 
 // assert['key'] = false
 
-const foos = new WeakSet()
-class Foo {
-  constructor () {
-    foos.add(this)
-  }
+// const foos = new WeakSet()
+// class Foo {
+//   constructor () {
+//     foos.add(this)
+//   }
 
-  method () {
-    if (!foos.has(this)) {
-      throw new TypeError('method 只能在Foo实例上使用')
-    } else {
-      console.log('using method')
-    }
-  }
-}
+//   method () {
+//     if (!foos.has(this)) {
+//       throw new TypeError('method 只能在Foo实例上使用')
+//     } else {
+//       console.log('using method')
+//     }
+//   }
+// }
 
-const f = new Foo()
+// const f = new Foo()
 
-f.method()
+// f.method()
+
+// let s1 = Symbol('bar')
+// let s2 = Symbol('bar')
+// console.log(s1 === s2, s1.toString(), s2.toString())
+// console.log(s1, s2)
+
+let m = new Map()
+m.set('a', 'foo')
+m.set('b', 'bar')
+m.set('c', 'baz')
+let arr = [1,2,3,4]
+
+// let k = m.keys()
+let v = m.values()
+let e = m.entries()
+let k = arr[Symbol.iterator]()
+console.log(k.next())
+console.log(k.next())
+console.log(k.next())
+console.log(k.next())
+console.log(v.next())
+console.log(v.next())
+console.log(v.next())
+console.log(v.next())
+console.log(e.next())
+console.log(e.next())
+console.log(e.next())
+console.log(e.next())
+// [Function: values]
+console.log(arr[Symbol.iterator])
+// Object [Array Iterator] {}
+console.log(arr[Symbol.iterator]())
+
+

@@ -82,7 +82,7 @@ babel-preset-2016
 
 #### 参数 arguments / callee / caller 的区别？
 
-- arguments 代表正在执行的函数的餐素
+- arguments 代表正在执行的函数的参数
 - 使用 arguments.callee 获取，表示正在执行的函数
 - caller 代表这个函数在被哪个函数调用? 试了下，函数打出来是null(Person.caller), 构造函数的实例打出来是undefined(p.caller)
 
@@ -189,11 +189,56 @@ graceProxy.name = 'jack'
 #### map, set, weakMap, weakSet 的区别
 
 - Map是一个 hash 结构，Set 是一个数组结构
-- 
+- Weak 都是弱引用
+  - GC 不考虑
+  - key 都是对象
+
+#### Symbol
+
+独一无二属性名
+
+```js
+let s1 = Symbol('bar')
+let s2 = Symbol('bar')
+console.log(s1 === s2, s1.toString(), s2.toString())
+console.log(s1, s2)
+```
+
+### 迭代器 Iterator
+
+它是一种接口，为各种不同的数据结构，提供统一的访问机制。任何数据结构只有部署了`Iterator`, 都可以完成遍历操作。
+
+- 为各种数据结构，提供一个统一、简单的访问接口
+- 使数据结构的成员，按照某种次序排列
+- 接口主要供`for ... of` 消费
+- 本质就是**指针**
+
+原生具备这些接口的数据结构有哪些？
+
+- Array
+- Map
+- Set
+- String
+- TypedArray ?
+- arguments
+- Nodelist ?
+
+一个对象如果要具备可被`for...of`循环调用的 `Iterator` 接口，就必须在 `Symbol.iterator` 的属性上部署遍历器生成方法
+
+```js
+let arr = [1,2,3,4]
+let k = arr[Symbol.iterator]()
+// [Function: values]
+console.log(arr[Symbol.iterator])
+// Object [Array Iterator] {}
+console.log(arr[Symbol.iterator]())
+
+console.log(k.next())
+```
 
 ## 写一个后台
 
 ## 补充
 
-insert-css
-enotion
+- insert-css
+- enotion

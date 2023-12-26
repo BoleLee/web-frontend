@@ -1,3 +1,7 @@
+# ES6面试题
+
+## ES特性
+
 ### 函数解析
 
 #### new一个箭头函数，会如何?
@@ -71,4 +75,47 @@ class Foo {
 
 const f = new Foo()
 f.method()
+```
+
+### 迭代器
+
+原生具备这些接口的数据结构有哪些？
+
+- Array
+- Map
+- Set
+- String
+- TypedArray ?
+- arguments
+- Nodelist ?
+
+一个对象如果要具备可被`for...of`循环调用的 `Iterator` 接口，就必须在 `Symbol.iterator` 的属性上部署遍历器生成方法
+
+```js
+let m = new Map()
+m.set('a', 'foo')
+m.set('b', 'bar')
+m.set('c', 'baz')
+let arr = [1,2,3,4]
+
+// let k = m.keys()
+let v = m.values()
+let e = m.entries()
+let k = arr[Symbol.iterator]()
+console.log(k.next())
+console.log(k.next())
+console.log(k.next())
+console.log(k.next())
+console.log(v.next())
+console.log(v.next())
+console.log(v.next())
+console.log(v.next())
+console.log(e.next())
+console.log(e.next())
+console.log(e.next())
+console.log(e.next())
+// [Function: values]
+console.log(arr[Symbol.iterator])
+// Object [Array Iterator] {}
+console.log(arr[Symbol.iterator]())
 ```
