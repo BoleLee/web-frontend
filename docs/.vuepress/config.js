@@ -6,7 +6,8 @@ module.exports = {
       '/',
       '/jsmodule',
       '/es6/',
-      '/es6/question.md'
+      '/es6/question.md',
+      '/es6/es-shizhan.md'
     ]
   }
 }

@@ -1,0 +1,26 @@
+{
+  "name": "back_end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "grace lee",
+  "license": "MIT",
+  "scripts": {
+    "dev": "rollup -c -w",
+    "nodemon": "nodemon ./dist/bundle.js"
+  },
+  "dependencies": {
+    "core-js": "^3.34.0",
+    "express": "^4.18.2",
+    "koa": "^2.14.2",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^12.0.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.6",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.23.6",
+    "@babel/preset-env": "^7.23.6",
+    "rollup": "2.79.0",
+    "rollup-plugin-babel": "^4.4.0"
+  }
+}
