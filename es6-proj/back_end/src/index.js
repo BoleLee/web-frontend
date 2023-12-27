@@ -11,6 +11,17 @@ app.use(bodyParser())
 
 console.log('controllers: ', controllers)
 
+controllers.forEach(item => {
+  let { url, method, handler, constructor } = item
+  const { prefix } = constructor
+  if (prefix) url = `${prefix}${url}`
+  console.log(url)
+  router[method](url, handler)
+})
+
+app.use(router.routes())
+app.use(router.allowedMethods({}))
+
 app.listen(3000, () => {
   console.log('server is on 3000')
 })

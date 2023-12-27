@@ -244,3 +244,5 @@ console.log(k.next())
 
 - insert-css
 - enotion
+
+输出：`demo/es6.js`

@@ -1,8 +1,8 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('koa'), require('koa-router'), require('koa-bodyparser'), require('core-js/modules/esnext.async-iterator.for-each.js'), require('core-js/modules/esnext.iterator.constructor.js'), require('core-js/modules/esnext.iterator.for-each.js'), require('core-js/modules/esnext.async-iterator.reduce.js'), require('core-js/modules/esnext.iterator.reduce.js')) :
-  typeof define === 'function' && define.amd ? define(['koa', 'koa-router', 'koa-bodyparser', 'core-js/modules/esnext.async-iterator.for-each.js', 'core-js/modules/esnext.iterator.constructor.js', 'core-js/modules/esnext.iterator.for-each.js', 'core-js/modules/esnext.async-iterator.reduce.js', 'core-js/modules/esnext.iterator.reduce.js'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.Koa, global.Router, global.bodyParser));
-})(this, (function (Koa, Router, bodyParser) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('core-js/modules/esnext.async-iterator.for-each.js'), require('core-js/modules/esnext.iterator.constructor.js'), require('core-js/modules/esnext.iterator.for-each.js'), require('koa'), require('koa-router'), require('koa-bodyparser'), require('core-js/modules/esnext.async-iterator.reduce.js'), require('core-js/modules/esnext.iterator.reduce.js')) :
+  typeof define === 'function' && define.amd ? define(['core-js/modules/esnext.async-iterator.for-each.js', 'core-js/modules/esnext.iterator.constructor.js', 'core-js/modules/esnext.iterator.for-each.js', 'koa', 'koa-router', 'koa-bodyparser', 'core-js/modules/esnext.async-iterator.reduce.js', 'core-js/modules/esnext.iterator.reduce.js'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(null, null, null, global.Koa, global.Router, global.bodyParser));
+})(this, (function (esnext_asyncIterator_forEach_js, esnext_iterator_constructor_js, esnext_iterator_forEach_js, Koa, Router, bodyParser) { 'use strict';
 
   function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -42,11 +42,20 @@
     };
   }
 
-  var _dec, _dec2, _class, _class2;
+  var _dec, _dec2, _dec3, _class, _class2;
   function _applyDecoratedDescriptor(target, property, decorators, descriptor, context) { var desc = {}; Object.keys(descriptor).forEach(function (key) { desc[key] = descriptor[key]; }); desc.enumerable = !!desc.enumerable; desc.configurable = !!desc.configurable; if ('value' in desc || desc.initializer) { desc.writable = true; } desc = decorators.slice().reverse().reduce(function (desc, decorator) { return decorator(target, property, desc) || desc; }, desc); if (context && desc.initializer !== void 0) { desc.value = desc.initializer ? desc.initializer.call(context) : void 0; desc.initializer = undefined; } if (desc.initializer === void 0) { Object.defineProperty(target, property, desc); desc = null; } return desc; }
-  let BookController = (_dec = Controller('/book'), _dec2 = RequestMapping(RequestMethod.GET, '/all'), _dec(_class = (_class2 = class BookController {
-    async getAllBooks(ctx, next) {}
-  }, (_applyDecoratedDescriptor(_class2.prototype, "getAllBooks", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "getAllBooks"), _class2.prototype)), _class2)) || _class);
+  let BookController = (_dec = Controller('/book'), _dec2 = RequestMapping(RequestMethod.GET, '/all'), _dec3 = RequestMapping(RequestMethod.GET, '/delete'), _dec(_class = (_class2 = class BookController {
+    async getAllBooks(ctx, next) {
+      ctx.body = {
+        data: 'get all books'
+      };
+    }
+    async deleteBook(ctx, next) {
+      ctx.body = {
+        data: '删除book'
+      };
+    }
+  }, (_applyDecoratedDescriptor(_class2.prototype, "getAllBooks", [_dec2], Object.getOwnPropertyDescriptor(_class2.prototype, "getAllBooks"), _class2.prototype), _applyDecoratedDescriptor(_class2.prototype, "deleteBook", [_dec3], Object.getOwnPropertyDescriptor(_class2.prototype, "deleteBook"), _class2.prototype)), _class2)) || _class);
 
   var index = {
     Book: BookController
@@ -56,6 +65,22 @@
   const router = new Router__default["default"]();
   app.use(bodyParser__default["default"]());
   console.log('controllers: ', controllers);
+  controllers.forEach(item => {
+    let {
+      url,
+      method,
+      handler,
+      constructor
+    } = item;
+    const {
+      prefix
+    } = constructor;
+    if (prefix) url = `${prefix}${url}`;
+    console.log(url);
+    router[method](url, handler);
+  });
+  app.use(router.routes());
+  app.use(router.allowedMethods({}));
   app.listen(3000, () => {
     console.log('server is on 3000');
   });
