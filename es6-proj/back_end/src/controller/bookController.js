@@ -1,11 +1,12 @@
 import { Controller, RequestMapping, RequestMethod } from '../utils/decorators.js'
+import { books } from '../mock/books.js'
 
 @Controller('/book')
 export default class BookController {
   @RequestMapping(RequestMethod.GET, '/all')
   async getAllBooks (ctx, next) {
     ctx.body = {
-      data: 'get all books'
+      data: books
     }
   }
 

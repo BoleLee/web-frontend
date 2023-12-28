@@ -4,7 +4,7 @@ svelte / express / koa / decorator
 
 ## Svelte 的前端
 
-体验下svelte写一个项目，熟悉下其语法，如循环 {#each arr as item} {/each}
+体验下svelte写一个项目，熟悉下其语法，如循环 `{#each arr as item} {/each}`
 
 ## 装饰路由 decorator
 
@@ -20,12 +20,13 @@ svelte / express / koa / decorator
 
 ## koa & express
 
+<img alt="洋葱模型" src="../.vuepress/public/nodejs.jpeg" width="60%" />
+
 ### epress
 
 express: node端，有一个 http 的模块（基于 net 的模块）（eventEmitter / stream 的模块）。
 是一个后端框架
 
-（图解 drawio）
 洋葱模型：express.js 从上往下，再从下往上。当/访问时，打印顺序为
 
 ```bash
@@ -156,26 +157,27 @@ app.listen(PORT, () => {
 })
 ```
 
-## 尝试在 node 中使用 esm
+## 项目实战 - 尝试在 node 中使用 esm
 
 - type: 'module'
 - .mjs
 
-> 尝试使用 rollup 对 esm 打包，构建成 bundle, 然后实时执行这个 bundle
+> 目标：<br />
+> backend: 尝试使用 rollup 对 esm 打包，构建成 bundle, 然后实时执行这个 bundle。使用koa编写，提供接口供前端调用。<br />
+> frontend: 使用svelte编写，调用后端接口并处理显示数据。
 
-1）
+1）使用rollup编译后端代码
 rollup.config.js
 src/index.js -> dist/bundle.js
 plugins: babel
 
-2）
-nodemon 执行打包后的文件
+2）nodemon 执行打包后的文件
 
 3）yarn add core-js
 
-输出demo: koa-src/
+阶段输出demo: koa-src/
 
-4）使用装饰器收集 controller
+### 4）使用装饰器收集 controller
 
 ```js
 // bookController.js
@@ -237,28 +239,112 @@ export function RequestMapping (method = '', url = '') {
 }
 ```
 
-5）对接前端联调
+### 5）对接svelte前端联调
 
-(TODO)
+5-1）初始化一个 svelte app, 使用路由 [svelte-spa-router](https://github.com/ItalyPaleAle/svelte-spa-router)
+。加了路由后要重启服务。
 
-初始化一个 svelte app, 使用路由。
-编译配置：`svelte.config.js, tailwind.config.js`
+```bash
+# https://www.svelte.cn/
+# 这个模板不再维护了，本次体验使用此模板建的项目，编译为rollup
+npx degit sveltejs/template svelte-app
 
-后端koa加个中间件cors解决请求CORS，`app.use()`
-
-svelte的一些语法：
+# https://svelte.dev/
+# https://kit.svelte.dev/
+# 最新是使用svelteKit来搭项目，编译为vite
+npm create svelte@latest my-app
+```
 
 ```svelte
-{#each arr as item }
+<script>
+import Router from 'svelte-spa-router'
+import { routes } from './routes.js'
+</script>
 
-{/each}
+<Router {routes} />
+```
 
-<!-- tailwind 样式配置 -->
-<!-- 分列 -->
+> TODO 尝试了设置多个页面，以及动态路由，但除了首页，另外设置的页面访问失败
+
+```js
+import Home from './views/Home.svelte'
+import About from './views/About.svelte'
+import { wrap } from 'svelte-spa-router/wrap'
+
+export const routes = {
+  '/': Home,
+
+  '/book/*': wrap({
+    asyncComponent: () => import('./views/About.svelte')
+  }),
+  '/about': About
+}
+```
+
+5-2）请求后端数据
+
+[Tutorial - API routes - GET handlers](https://learn.svelte.dev/tutorial/get-handlers)
+
+```svelte
+<script>
+// 要给数组初始值，否则无法使用#each解析
+let books = []
+async function getData() {
+  const response = await fetch('http://localhost:3000/book/all');
+  let result = await response.json();
+  console.log(result)
+  books = result.data
+}
+</script>
+```
+
+后端koa加个cors解决请求CORS，`app.use()`
+
+```js
+// cors
+app.use(async (ctx, next) => {
+  ctx.set('Access-Control-Allow-Origin', '*')
+  ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, *')
+  ctx.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+  ctx.set('Content-Type', 'application/json;charset=utf-8')
+  if (ctx.request.method.toLowerCase() === 'options') {
+    ctx.state = 200
+  } else {
+    await next()
+  }
+})
+
+```
+
+5-3）处理数据及显示
+
+[svelte语法，详见文档及教程](https://learn.svelte.dev/tutorial/each-blocks)
+
+```svelte
+<ul class="list">
+  {#each books as book (book.id)}
+  <li key="{book.id}" class="list-item">
+    <div>{book.id}</div>
+    <div>{book.name}</div>
+    <div>{book.author}</div>
+    <div>{book.publish}</div>
+  </li>
+  {/each}
+</ul>
+```
+
+补充：（此次体验暂未使用）
+
+[tailwindcss - 样式库](https://tailwindcss.com/docs/installation)
+
+[smelte - 基于tailwindcss的 Material 风格样式 for svelte](https://smeltejs.com/)
+
+```svelte
+<!-- 样式类使用 分列 -->
 w-1/12
 w-1/12
 w-8/12
 w-1/12
 ```
 
-至此基本完成一个含前后端的小项目，暂无鉴权。输出：`es6-proj/`
+至此基本完成一个含前后端的小项目，暂不涉及数据库。输出：`es6-proj/back_end, es6-proj/svelte-app`
