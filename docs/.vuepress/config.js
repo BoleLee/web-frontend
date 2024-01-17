@@ -22,7 +22,8 @@ module.exports = {
         path: '/react/',
         sidebarDepth: 2,
         children: [
-          '/react/'
+          '/react/',
+          '/react/react-base'
         ]
       }
     ]
