@@ -25,6 +25,13 @@ module.exports = {
           '/react/',
           '/react/react-base'
         ]
+      },
+      {
+        title: 'algorithm',
+        path: '/algorithm/',
+        children: [
+          '/algorithm/README'
+        ]
       }
     ]
   }

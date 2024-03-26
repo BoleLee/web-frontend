@@ -142,10 +142,10 @@ ReactDOM.render(element, document.getElementById('root'))
 </div>
 
 // render 只能标识当前时刻的状态，当前element是什么，就渲染的是什么
-// 那么，如何增量渲染？不可能每次dom变动，就执行一次render
+// 那么，如何增量渲染？不可能每次dom变动，就执行一次 ReactDOM.render
 ```
 
-**如何增量渲染？不可能每次dom变动，就执行一次render**
+**如何增量渲染？不频繁操作dom**
 
 ## props 和 state
 
@@ -296,7 +296,7 @@ class TextConponent extends React.Component {
 
 props: 外部传入，保证其不会改变，需要改变转为 state
 
-如何增量渲染？不可能每次dom变动，就执行一次render
+如何增量渲染？不频繁操作dom
 
 ```jsx
 class Clock extends React.Component {
