@@ -14,5 +14,5 @@
 
 ```javascript
 const cellValue = risk_probability + risk_consepuence - 1
-let riskValue = cellValue <= 2 ? 1 : cellValue <= 4 ? 2 : cellValue <= 6 ? 3 : 4
+let riskValue = cellValue <= 2 ? 1 : (cellValue <= 4 ? 2 : (cellValue <= 6 ? 3 : 4))
 ```
