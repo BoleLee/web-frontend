@@ -30,7 +30,14 @@ module.exports = {
         title: 'algorithm',
         path: '/algorithm/',
         children: [
-          '/algorithm/README'
+          '/algorithm/README.md'
+        ]
+      },
+      {
+        title: 'python',
+        path: '/python/',
+        children: [
+          '/python/README.md'
         ]
       }
     ]
