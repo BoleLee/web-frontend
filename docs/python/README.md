@@ -54,6 +54,7 @@ for index, item in enumerate(content.early_warning_category):
 
 ### 一些语法
 
-python的语法，跟javascript，似乎很多是反过来的，比如上述遍历，js是 item, index, py则反过来了。
-join, js是 arr.join('、'), py 又反过来：'、'.join(arr)
-import库，js是 import Xxx from xxx, py: from xxx import Xxx
+- python的语法，跟javascript，似乎很多是反过来的，比如上述遍历，js是 item, index, py则反过来了。
+- join, js是 arr.join('、'), py 又反过来：'、'.join(arr)
+- import库，js是 import Xxx from xxx, py: from xxx import Xxx
+- dict 不能使用 dict.xxx 要使用 dict['xxx'], 且xxx属性必须存在；若不确定属性是否存在，要使用get：dict.get('xxx', default_value)
